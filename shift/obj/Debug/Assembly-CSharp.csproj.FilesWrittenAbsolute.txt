@@ -1,0 +1,17 @@
+/Users/erichchu/Documents/Shift/shift/Temp/bin/Debug/UnityEngine.dll
+/Users/erichchu/Documents/Shift/shift/Temp/bin/Debug/UnityEditor.dll
+/Users/erichchu/Documents/Shift/shift/Temp/bin/Debug/UnityEngine.UI.dll
+/Users/erichchu/Documents/Shift/shift/Temp/bin/Debug/UnityEngine.Networking.dll
+/Users/erichchu/Documents/Shift/shift/Temp/bin/Debug/UnityEngine.PlaymodeTestsRunner.dll
+/Users/erichchu/Documents/Shift/shift/Temp/bin/Debug/UnityEngine.Analytics.dll
+/Users/erichchu/Documents/Shift/shift/Temp/bin/Debug/UnityEngine.HoloLens.dll
+/Users/erichchu/Documents/Shift/shift/Temp/bin/Debug/UnityEngine.VR.dll
+/Users/erichchu/Documents/Shift/shift/Temp/bin/Debug/Mono.Cecil.dll
+/Users/erichchu/Documents/Shift/shift/Temp/bin/Debug/Unity.SerializationLogic.dll
+/Users/erichchu/Documents/Shift/shift/Temp/bin/Debug/Unity.DataContract.dll
+/Users/erichchu/Documents/Shift/shift/Temp/bin/Debug/ICSharpCode.NRefactory.dll
+/Users/erichchu/Documents/Shift/shift/Temp/bin/Debug/Unity.UNetWeaver.dll
+/Users/erichchu/Documents/Shift/shift/Temp/bin/Debug/Unity.UNetWeaver.dll.mdb
+/Users/erichchu/Documents/Shift/shift/Temp/bin/Debug/Unity.CecilTools.dll
+/Users/erichchu/Documents/Shift/shift/Temp/bin/Debug/Mono.Cecil.Pdb.dll
+/Users/erichchu/Documents/Shift/shift/Temp/bin/Debug/Mono.Cecil.Mdb.dll
