@@ -35,10 +35,12 @@ public class PlayerController : MonoBehaviour {
 
     if (Input.GetAxis ("Horizontal") < 0) {
       Horizontal = -1;
+	  gameObject.GetComponentInChildren<SpriteRenderer> ().flipX = false;
       worldDirection = -1;
     } else if (Input.GetAxis ("Horizontal") > 0) {
-      Horizontal = 1;
+      Horizontal = 1; 
       worldDirection = 1;
+			gameObject.GetComponentInChildren<SpriteRenderer> ().flipX = true;
     } else {
       Horizontal = 0;
     }
