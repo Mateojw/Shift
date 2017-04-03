@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour {
     //If we're on an invisible platform, move to a physical platform, this comes in handy to make rotating possible
     //Try to move us to the closest platform to the camera, will help when rotating to feel more natural
     //If we changed anything, update our level data which pertains to our inviscubes
-    if(!PlayerController._jumping)
+    if(!PlayerController.isJumping)
     {
       bool updateData = false;
       if(OnInvisiblePlatform())
@@ -183,7 +183,7 @@ public class GameManager : MonoBehaviour {
         if(Mathf.Abs(item.position.x - PlayerController.transform.position.x) < WorldUnits +0.1f)
         {
 
-          if(PlayerController.transform.position.y - item.position.y <= WorldUnits + 0.2f && PlayerController.transform.position.y - item.position.y >0 && !PlayerController._jumping)
+          if(PlayerController.transform.position.y - item.position.y <= WorldUnits + 0.2f && PlayerController.transform.position.y - item.position.y >0 && !PlayerController.isJumping)
           {
             if(facingDirection == FacingDirection.Front && item.position.z < PlayerController.transform.position.z)
               moveCloser = true;
@@ -206,7 +206,7 @@ public class GameManager : MonoBehaviour {
       else{
         if(Mathf.Abs(item.position.z - PlayerController.transform.position.z) < WorldUnits + 0.1f)
         {
-          if(PlayerController.transform.position.y - item.position.y <= WorldUnits + 0.2f && PlayerController.transform.position.y - item.position.y >0 && !PlayerController._jumping)
+          if(PlayerController.transform.position.y - item.position.y <= WorldUnits + 0.2f && PlayerController.transform.position.y - item.position.y >0 && !PlayerController.isJumping)
           {
             if(facingDirection == FacingDirection.Right && item.position.x > PlayerController.transform.position.x)
               moveCloser = true;

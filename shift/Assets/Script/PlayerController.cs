@@ -11,8 +11,9 @@ public class PlayerController : MonoBehaviour {
   public float Gravity = 1f;
   public CharacterController charController;
   private FacingDirection _myFacingDirection;
-  public float JumpHeight = 0f;
-  public bool _jumping = false;
+  private bool isGrounded = true;
+  public bool isJumping = false;
+  private float jumpForce = 4f;
   private float degree = 0;
 
   public Transform firePoint;
@@ -20,10 +21,8 @@ public class PlayerController : MonoBehaviour {
 
 
   public FacingDirection CmdFacingDirection {
-
     set{ _myFacingDirection = value;
     }
-
   }
 
   public int getDirection() {
@@ -32,23 +31,27 @@ public class PlayerController : MonoBehaviour {
 
   // Update is called once per frame
   void Update () {
-
     if (Input.GetAxis ("Horizontal") < 0) {
       Horizontal = -1;
-	  gameObject.GetComponentInChildren<SpriteRenderer> ().flipX = false;
       worldDirection = -1;
+      gameObject.GetComponentInChildren<SpriteRenderer> ().flipX = false;
     } else if (Input.GetAxis ("Horizontal") > 0) {
       Horizontal = 1; 
       worldDirection = 1;
-			gameObject.GetComponentInChildren<SpriteRenderer> ().flipX = true;
+      gameObject.GetComponentInChildren<SpriteRenderer> ().flipX = true;
     } else {
       Horizontal = 0;
     }
 
-    if (Input.GetKeyDown (KeyCode.Space) && !_jumping)
-    {
-      _jumping = true;
-      StartCoroutine(JumpingWait());
+    if (gameObject.GetComponent<CharacterController> ().isGrounded) {
+      this.isGrounded = true;
+      this.isJumping = false;
+    } else {
+      this.isGrounded = false;
+    }
+
+    if (Input.GetKeyDown (KeyCode.Space) && this.isGrounded) {
+      this.isJumping = true;
     }
 
     if(anim)
@@ -73,7 +76,6 @@ public class PlayerController : MonoBehaviour {
     Vector3 trans = Vector3.zero;
     if(_myFacingDirection == FacingDirection.Front)
     {
-
       trans = new Vector3(Horizontal* moveFactor, -Gravity * moveFactor, 0f);
     }
     else if(_myFacingDirection == FacingDirection.Right)
@@ -88,26 +90,17 @@ public class PlayerController : MonoBehaviour {
     {
       trans = new Vector3(0f, -Gravity * moveFactor, -Horizontal* moveFactor);
     }
-    if(_jumping)
-    {
-      transform.Translate( Vector3.up * JumpHeight * Time.deltaTime);
+    if (isJumping) {
+      Vector3 jumpUp = transform.TransformDirection(Vector3.up) * jumpForce;
+      charController.Move (jumpUp * Time.deltaTime);
     }
-
 
     charController.SimpleMove (trans);
   }
   public void UpdateToFacingDirection(FacingDirection newDirection, float angle)
   {
-
     _myFacingDirection = newDirection;
     degree = angle;
 
-  }
-
-  public IEnumerator JumpingWait()
-  {
-    yield return new WaitForSeconds (0.35f);
-    //Debug.Log ("Returned jump to false");
-    _jumping = false;
   }
 }
