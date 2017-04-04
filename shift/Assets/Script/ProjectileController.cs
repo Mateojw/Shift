@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WorldView;
 
 public class ProjectileController : MonoBehaviour {
 
@@ -13,13 +14,6 @@ public class ProjectileController : MonoBehaviour {
   private float focusAxesPosition; // The axes that the projectile will be moving in
   private float expTime;
 
-  public enum FacingDirection
-  {
-    Front = 0,
-    Right = 1,
-    Back = 2,
-    Left = 3
-  }
 
 	// Use this for initialization
 	void Start () {
@@ -61,6 +55,4 @@ public class ProjectileController : MonoBehaviour {
       Destroy (gameObject);
     }
 	}
-
-
 }
