@@ -20,7 +20,7 @@ public class ProjectileController : MonoBehaviour {
     this.playerYAdjust = 0.31f;
     this.direction = GameObject.FindWithTag("Player").GetComponent<PlayerController>().getDirection();
     this.playerPos = GameObject.FindWithTag ("Player").transform.position;
-    this.worldDirection = (FacingDirection)GameObject.FindWithTag ("GameManager").GetComponent<GameManager> ().getFacingDirection ();
+    this.worldDirection = GameObject.FindWithTag ("GameManager").GetComponent<GameManager> ().getFacingDirection ();
     if (this.worldDirection == FacingDirection.Front) {
       this.focusAxesPosition = this.playerPos.x;
     } else if (this.worldDirection == FacingDirection.Right) {

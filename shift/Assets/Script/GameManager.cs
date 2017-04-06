@@ -59,6 +59,9 @@ namespace WorldView {
     //size are needed - Note: All cubes must be same size
     public float WorldUnits = 1.000f;
 
+    //Keep track of player and if its dead or not
+    private Player player;
+
     public FacingDirection getFacingDirection() {
       return this.facingDirection;
     }
@@ -70,6 +73,7 @@ namespace WorldView {
       //Cache our PlayerController script located on the player and update our level data (create invisible cubes)
       facingDirection = FacingDirection.Front;
       PlayerController = Player.GetComponent<PlayerController> ();
+      player = Player.GetComponent<Player> ();
       UpdateLevelData (true);
     }
 
@@ -80,7 +84,7 @@ namespace WorldView {
       //If we're on an invisible platform, move to a physical platform, this comes in handy to make rotating possible
       //Try to move us to the closest platform to the camera, will help when rotating to feel more natural
       //If we changed anything, update our level data which pertains to our inviscubes
-      if(!PlayerController.isJumping)
+      if(!PlayerController.isJumping && !player.isDead())
       {
         bool updateData = false;
         if(OnInvisiblePlatform())
@@ -90,47 +94,39 @@ namespace WorldView {
           updateData = true;
         if(updateData)
           UpdateLevelData(false);
-
-
       }
 
 
       //Handle Player input for rotation command
       if(Input.GetKeyDown(KeyCode.RightArrow))
       {
+        player.disableHitBox ();
         //If we rotate while on an invisible platform we must move to a physical platform
         //If we don't, then we could be standing in mid air after the rotation
         if(OnInvisiblePlatform())
         {
           //MoveToClosestPlatform();
           MovePlayerDepthToClosestPlatform();
-
         }
         lastfacing = facingDirection;
         facingDirection = RotateDirectionRight();
         degree-=90f;
         UpdateLevelData(false);
         PlayerController.UpdateToFacingDirection(facingDirection, degree);
-
-
-
-
       }
       else if( Input.GetKeyDown(KeyCode.LeftArrow))
       {
+        player.disableHitBox ();
         if(OnInvisiblePlatform())
         {
           //MoveToClosestPlatform();
           MovePlayerDepthToClosestPlatform();
-
         }
         lastfacing = facingDirection;
         facingDirection = RotateDirectionLeft();
         degree+=90f;
         UpdateLevelData(false);
         PlayerController.UpdateToFacingDirection(facingDirection, degree);
-
-
       }
     }
     /// <summary>
@@ -307,16 +303,13 @@ namespace WorldView {
     {
       foreach(Transform item in Level)
       {
-
         if(facingDirection == FacingDirection.Front || facingDirection == FacingDirection.Back)
         {
           if(Mathf.Abs(item.position.x - PlayerController.transform.position.x) < WorldUnits + 0.1f)
           if(PlayerController.transform.position.y - item.position.y <= WorldUnits + 0.2f && PlayerController.transform.position.y - item.position.y >0)
           {
-
             PlayerController.transform.position = new Vector3(PlayerController.transform.position.x, PlayerController.transform.position.y, item.position.z);
             return true;
-
           }
         }
         else
@@ -324,7 +317,6 @@ namespace WorldView {
           if(Mathf.Abs(item.position.z - PlayerController.transform.position.z) < WorldUnits + 0.1f)
           if(PlayerController.transform.position.y - item.position.y <= WorldUnits + 0.2f && PlayerController.transform.position.y - item.position.y >0)
           {
-
             PlayerController.transform.position = new Vector3(item.position.x, PlayerController.transform.position.y, PlayerController.transform.position.z);
             return true;
           }
@@ -388,17 +380,6 @@ namespace WorldView {
     }
 
 
-    private void updateEnemyOrientations(int direction) {
-      GameObject[] allEnemies = GameObject.FindGameObjectsWithTag ("enemy");
-      Debug.Log (allEnemies.Length);
-      if (allEnemies.Length > 0) {
-        foreach (GameObject enemy in allEnemies) {
-          enemy.GetComponent<Enemy> ().updateOrientation (direction);
-        }
-      }
-    }
-
-
     /// <summary>
     /// Any actions required if player returns to start
     /// </summary>
@@ -444,7 +425,6 @@ namespace WorldView {
       //Our FacingDirection enum only has 4 states, if we go past the last state, loop to the first
       if (change > 3)
         change = 0;
-      updateEnemyOrientations (1);
       return (FacingDirection) (change);
     }
     /// <summary>
@@ -458,7 +438,6 @@ namespace WorldView {
       //Our FacingDirection enum only has 4 states, if we go below the first, go to the last state
       if (change < 0)
         change = 3;
-      updateEnemyOrientations (-1);
       return (FacingDirection) (change);
     }
   }
