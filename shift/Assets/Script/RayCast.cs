@@ -12,16 +12,12 @@ public class RayCast : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-
 		RaycastHit hit;
 		Ray landingRay = new Ray (transform.position, Camera.main.transform.forward);
-
-
 		if (Physics.Raycast (landingRay, out hit, range)) {
-			if (hit.transform.tag == "Enemy") {
-			Debug.Log(hit.transform.tag);
-			
+			if (hit.transform.tag == "enemy") {
+        Debug.Log ("hit");
+        Destroy (hit.transform.gameObject);
 			}
 
 			Debug.DrawLine (transform.position, hit.point);
